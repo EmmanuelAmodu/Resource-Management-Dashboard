@@ -19,7 +19,7 @@ export class DynamicFormComponent implements OnInit {
 
     ngOnInit() {
         if (this.questions.length === 0) {
-            this.questions = this.q.getQuestions();
+            this.questions = this.q.questions;
         }
 
         this.form = this.qcs.toFormGroup(this.questions);

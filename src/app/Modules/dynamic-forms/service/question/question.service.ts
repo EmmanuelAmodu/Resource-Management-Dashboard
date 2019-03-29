@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { QuestionBase } from '../../Class/question-base';
 import { DropdownQuestion } from '../../Class/question-dropdown';
 import { TextboxQuestion } from '../../Class/question-textbox';
+import { DataStub } from '../../../../Services/DataService/data.stub.temp';
 
 @Injectable({
     providedIn: 'root'
@@ -9,33 +10,14 @@ import { TextboxQuestion } from '../../Class/question-textbox';
 export class QuestionService {
     private typeMap = {'Dropdown': DropdownQuestion, 'Textbox': TextboxQuestion};
 
+    public get questions() {
+        return this.loadQuestions();
+    }
+
     // TODO: get from a remote source of question metadata
     // TODO: make asynchronous
-    public getQuestions() {
-        const questionRaw: any = [
-            {
-                key: 'product_type',
-                label: 'Product Type',
-                ftype: 'Dropdown',
-                options_model: 'product_type',
-                order: 3
-            },
-            {
-                key: 'firstName',
-                label: 'First name',
-                value: 'Bombasto',
-                ftype: 'Textbox',
-                required: true,
-                order: 1
-            },
-            {
-                key: 'emailAddress',
-                label: 'Email',
-                type: 'email',
-                ftype: 'Textbox',
-                order: 2
-            }
-        ];
+    private loadQuestions() {
+        const questionRaw: any = new DataStub().getQuestionsMap('SupplyRequestForm');
 
         const questions = questionRaw.map(question => {
             if (question.options_model) {
@@ -51,6 +33,7 @@ export class QuestionService {
         return questions.sort((a, b) => a.order - b.order);
     }
 
+    // TODO: get value from
     private getOptions(model) {
         return [
             { key: 'solid', value: 'Solid' },
