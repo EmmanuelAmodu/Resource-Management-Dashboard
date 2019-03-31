@@ -3,11 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { QuestionBase } from '../../Class/question-base';
 
 @Component({
-    selector: 'app-question',
-    templateUrl: './dynamic-form-question.component.html'
+	selector: 'app-question',
+	templateUrl: './dynamic-form-question.component.html'
 })
 export class DynamicFormQuestionComponent {
-    @Input() question: QuestionBase<any>;
-    @Input() form: FormGroup;
-    get isValid() { return this.form.controls[this.question.key].valid; }
+	@Input() question: QuestionBase<any>;
+	@Input() form: FormGroup;
+	get isValid() { return this.form.controls[this.question.key].valid; }
 }

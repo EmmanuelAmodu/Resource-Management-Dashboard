@@ -7,11 +7,11 @@ import { DynamicFormComponent } from './Components/dynamic-form/dynamic-form.com
 import { DynamicFormQuestionComponent } from '../../Modules/dynamic-forms/Components/dynamic-form-question/dynamic-form-question.component';
 
 @NgModule({
-    declarations: [DynamicFormComponent, DynamicFormQuestionComponent],
-    imports: [
-        CommonModule,
-        DynamicFormsRoutingModule,
-        ReactiveFormsModule
-    ]
+	declarations: [DynamicFormComponent, DynamicFormQuestionComponent],
+	imports: [
+		CommonModule,
+		DynamicFormsRoutingModule,
+		ReactiveFormsModule
+	]
 })
 export class DynamicFormsModule { }
