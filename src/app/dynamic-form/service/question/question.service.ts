@@ -14,7 +14,7 @@ export class QuestionService {
 
 	constructor(private dataService: DataService) {}
 
-	public getQuestions(form_name) {
+	public getQuestions(form_name: string) {
 		const questionRaw = this.dataService.get('app/forms', {form_name: form_name});
 		return this.createFormOption(questionRaw);
 	}

@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { QuestionControlService } from '../../service/question-control/question-control.service';
-import { QuestionBase } from '../../Class/question-base';
-import { QuestionService } from '../../service/question/question.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { QuestionControlService } from './service/question-control/question-control.service';
+import { QuestionBase } from './Class/question-base';
+import { QuestionService } from './service/question/question.service';
 
 @Component({
 	selector: 'app-dynamic-form',
@@ -15,6 +14,7 @@ export class DynamicFormComponent implements OnInit {
 
 	questions: QuestionBase<any>[] = [];
 	form: FormGroup;
+	@Input() form_name: string;
 	payLoad = '';
 
 	constructor(
@@ -23,15 +23,13 @@ export class DynamicFormComponent implements OnInit {
 		private route: ActivatedRoute) { }
 
 	ngOnInit() {
-		this.form = this.qcs.toFormGroup(this.questions);
-
-		this.route.params.subscribe(params => {
-			this.q.getQuestions(params.form_name).subscribe(questions => {
-				console.log(questions);
+		this.form = this.qcs.toFormGroup([]);
+		if (this.form_name !== undefined) {
+			this.q.getQuestions(this.form_name).subscribe(questions => {
 				this.questions = questions;
 				this.form = this.qcs.toFormGroup(this.questions);
 			});
-		});
+		}
 	}
 
 	onSubmit() {
