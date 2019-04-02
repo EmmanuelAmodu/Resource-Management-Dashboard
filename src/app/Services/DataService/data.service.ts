@@ -1,17 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LocalStorageService } from '../LocalStore/local-storage.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class DataService {
 	private baseUrl = 'http://localhost:8901/';
+	public auth: {username: string, token: string};
 
-	constructor(private http: HttpClient) {}
+	constructor(
+		private http: HttpClient,
+		private ls: LocalStorageService
+	) {
+			this.auth = JSON.parse(this.ls.fetch('auth'));
+	}
 
 	public get(path: string = '', query: any = {}) {
-		query.username = 'EAmodu_1';
-		query.token = '697d5f022cee3a5051ea8764221593fcc27d0f33a3119a6dc1af69bd3963f75bb3533c69cf8a33679f32eb921b709993';
+		query.username = this.auth.username;
+		query.token = this.auth.token;
 		const url = this.baseUrl + path;
 		return this.http.get(url, {params: query });
 	}

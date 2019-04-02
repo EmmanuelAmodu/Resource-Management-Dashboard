@@ -19,7 +19,7 @@ export class QuestionService {
 		return this.createFormOption(questionRaw);
 	}
 
-	createFormOption(questionRaw: Observable<any>) {
+	private createFormOption(questionRaw: Observable<any>) {
 		return map((raw: any) => {
 			const form_fields = raw[0].form_fields;
 			const questions = form_fields.map(question => {
