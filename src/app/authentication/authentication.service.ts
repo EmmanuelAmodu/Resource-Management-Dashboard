@@ -14,7 +14,14 @@ export class AuthenticationService {
 	}
 
 	public get isLoggedIn() {
-		const auth = JSON.parse(this.ls.fetch('auth'));
-		return this.dataService.get('auth/isLoggedin', auth);
+		return this.dataService.get('auth/isLoggedin', this.auth);
+	}
+
+	public logout() {
+		return this.dataService.post('auth/logout', this.auth);
+	}
+
+	public get auth() {
+		return JSON.parse(this.ls.fetch('auth'));
 	}
 }

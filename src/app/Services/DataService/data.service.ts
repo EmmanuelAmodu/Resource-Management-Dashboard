@@ -7,16 +7,14 @@ import { LocalStorageService } from '../LocalStore/local-storage.service';
 })
 export class DataService {
 	private baseUrl = 'http://localhost:8901/';
-	public auth: {username: string, token: string};
 
 	constructor(
 		private http: HttpClient,
 		private ls: LocalStorageService
-	) {
-			this.auth = JSON.parse(this.ls.fetch('auth'));
-	}
+	) { }
 
 	public get(path: string = '', query: any = {}) {
+		this.getTokenLocal();
 		query.username = this.auth.username;
 		query.token = this.auth.token;
 		const url = this.baseUrl + path;
@@ -26,5 +24,13 @@ export class DataService {
 	public post(path: string = '', body: any = {}) {
 		const url = this.baseUrl + path;
 		return this.http.post(url, body);
+	}
+
+	private getTokenLocal() {
+		return JSON.parse(this.ls.fetch('auth'));
+	}
+
+	public get auth() {
+		return this.getTokenLocal();
 	}
 }

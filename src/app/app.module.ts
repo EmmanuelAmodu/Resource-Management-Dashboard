@@ -8,13 +8,15 @@ import { DataService } from './Services/DataService/data.service';
 import { LocalStorageService } from './Services/LocalStore/local-storage.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { DynamicFormsModule } from './dynamic-form/dynamic-form.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
 	],
 	imports: [
 		DynamicFormsModule,
+		DashboardModule,
 		BrowserModule,
 		AppRoutingModule,
 		AuthenticationModule,
