@@ -1,0 +1,27 @@
+<div class="main-panel">
+	<app-navbar></app-navbar>
+	<div class="container" style="margin-top: 100px">
+		<h2 class="text-center">Depots List</h2>
+		<div class="row">
+			<div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let depot of depots">
+				<div class="card card-testimonial" >
+					<div class="card-body ">
+						<app-tables></app-tables>
+					</div>
+					<div class="card-footer">
+						<h4 class="card-title">{{ depot }}</h4>
+						<h6 class="card-category"><i class="nc-icon nc-mobile"></i>&nbsp;&nbsp; 08012345678</h6>
+							<a class="btn btn-primary" id="m-right"
+								[routerLink]="'../stations/' + depot"
+								>Stations</a
+							>
+							<a class="btn btn-primary"
+							[routerLink]="'../dashboard/depot/' + depot"
+								>Statistics</a
+							>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

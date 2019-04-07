@@ -10,11 +10,8 @@
 					class="btn btn-icon btn-round"
 					(click)="minimizeSidebar()"
 				>
-					<i
-						class="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"
-					></i>
-					<i
-						class="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"
+					<i class="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"></i>
+					<i class="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"
 					></i>
 				</button>
 			</div>
@@ -25,7 +22,11 @@
 					<span class="navbar-toggler-bar bar3"></span>
 				</button>
 			</div>
-			<a class="navbar-brand" href="#pablo">{{ getTitle() }}</a>
+			<a class="navbar-brand" id="goToDepot_a" [routerLink]="getPath + 'depot'">
+				<button
+					id="goToDepot_btn"
+					class="btn">Back to Depots</button>
+			</a>
 		</div>
 		<button
 			class="navbar-toggler"
@@ -100,6 +101,14 @@
 						<i class="nc-icon nc-settings-gear-65"></i>
 						<p>
 							<span class="d-lg-none d-md-block">Account</span>
+						</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" (click)="logout()">
+						<i class="nc-icon nc-lock-circle-open"></i>
+						<p>
+							<span class="d-lg-none d-md-block">Logout</span>
 						</p>
 					</a>
 				</li>

@@ -2,7 +2,9 @@ import { Component, OnInit, Renderer, ViewChild, ElementRef, Directive } from '@
 import { Router, ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
-import { ROUTES } from '../sidebar/sidebar.component';
+import { AuthenticationService } from 'src/app/authentication/authentication.service';
+import { ROUTES } from '../dashboard/sidebar/sidebar.component';
+import { filter } from 'rxjs/operators';
 
 const misc: any = {
 	navbar_menu_visible: 0,
@@ -12,7 +14,8 @@ const misc: any = {
 
 @Component({
 	selector: 'app-navbar',
-	templateUrl: 'navbar.component.html'
+	templateUrl: 'navbar.component.html',
+	styleUrls: ['navbar.component.css']
 })
 
 export class NavbarComponent implements OnInit {
@@ -28,7 +31,10 @@ export class NavbarComponent implements OnInit {
 	constructor(
 		location: Location,
 		private element: ElementRef,
-		private router: Router) {
+		private router: Router,
+		private actRouter: ActivatedRoute,
+		private auth: AuthenticationService
+		) {
 			this.location = location;
 			this.nativeElement = element.nativeElement;
 			this.sidebarVisible = false;
@@ -43,7 +49,9 @@ export class NavbarComponent implements OnInit {
 		if (body.classList.contains('sidebar-mini')) {
 			misc.sidebar_mini_active = true;
 		}
-		this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+		this._router = this.router.events.pipe(
+			filter(event => event instanceof NavigationEnd)
+		).subscribe((event: NavigationEnd) => {
 			const $layer = document.getElementsByClassName('close-layer')[0];
 			if ($layer) {
 				$layer.remove();
@@ -98,32 +106,23 @@ export class NavbarComponent implements OnInit {
 			setTimeout(() => mainPanel.style.position = '', 500);
 		}
 	}
+
 	sidebarToggle() {
 		this.sidebarVisible === false ? this.sidebarOpen() : this.sidebarClose();
 	}
 
-	getTitle() {
-		let titlee = this.location.prepareExternalUrl(this.location.path());
-		if (titlee.charAt(0) === '#') {
-			titlee = titlee.slice( 2 );
-		}
-		for (let item = 0; item < this.listTitles.length; item++) {
-			const parent = this.listTitles[item];
-			if (parent.path === titlee) {
-				return parent.title;
-			} else if (parent.children) {
-				const children_from_url = titlee.split('/')[2];
-				for (let current = 0; current < parent.children.length; current++) {
-					if (parent.children[current].path === children_from_url ) {
-						return parent.children[current].title;
-					}
-				}
-			}
-		}
-		return 'Dashboard';
+	get getPath() {
+		const b_no = this.location.path().split('/').length - 1;
+		return '../'.repeat(b_no);
+		// return this.location.prepareExternalUrl(this.location.path());
 	}
 
-	getPath() {
-		return this.location.prepareExternalUrl(this.location.path());
+	logout() {
+		this.auth.logout().subscribe((res: {status: boolean}) => {
+			if (res.status) {
+				// TODO logout should be lock screen
+				this.router.navigate(['login']);
+			}
+		});
 	}
 }

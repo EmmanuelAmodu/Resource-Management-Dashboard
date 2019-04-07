@@ -1,0 +1,15 @@
+.main-panel {
+	width: 100%;
+}
+.card-testimonial .card-body {
+    padding: 0px;
+}
+.card .card-body {
+    padding: 0px;
+}
+.card-body {
+    padding: 0px;
+}
+#m-right {
+    margin-right: 10px;
+}

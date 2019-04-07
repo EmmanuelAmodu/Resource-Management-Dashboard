@@ -1,0 +1,32 @@
+<div class="main-panel">
+	<app-navbar></app-navbar>
+	<div class="container" style="margin-top: 100px">
+		<h2 class="text-center">{{ depotName }} Stations List</h2>
+		<div class="row">
+			<div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let station of stations">
+				<div class="card card-pricing">
+					<div class="card-header">
+						<h6 class="card-category">{{ station }}</h6>
+					</div>
+					<div class="card-body">
+						<div class="card-icon icon-primary ">
+							<i class="nc-icon nc-spaceship"></i>
+						</div>
+						<h3 class="card-title">69$</h3>
+						<ul>
+							<li>Working materials in EPS</li>
+							<li>6 months access to the library</li>
+						</ul>
+					</div>
+					<div class="card-footer">
+						<a class="btn btn-round btn-primary"
+						[routerLink]="'../../dashboard/stations/' + station"
+							>View Stats</a
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

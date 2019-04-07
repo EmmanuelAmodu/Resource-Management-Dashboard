@@ -5,7 +5,7 @@ import 'rxjs/add/operator/filter';
 import { Location, PopStateEvent } from '@angular/common';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import PerfectScrollbar from 'perfect-scrollbar';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from 'src/app/navbar/navbar.component';
 
 @Component({
 	selector: 'app-dashboard',
