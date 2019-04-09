@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
-import { AuthGuard, NegAuthGuard, CanLoadDashBoardSection } from './auth.guard';
+import { AuthGuard, NegAuthGuard } from './auth.guard';
 import { DepotComponent } from './Components/depot/depot.component';
 import { StationComponent } from './Components/station/station.component';
 
@@ -23,7 +23,7 @@ const routes: Routes = [
 		component: StationComponent
 	},
 	{
-		path: 'dashboard/:entity/:name',
+		path: 'dashboard',
 		loadChildren: 'src/app/dashboard/dashboard.module#DashboardModule',
 	},
 	{

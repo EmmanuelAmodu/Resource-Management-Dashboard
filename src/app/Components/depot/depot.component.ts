@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DepotComponent implements OnInit {
 	public depots: string[] = ['Lagos', 'Ibadan', 'Oyo', 'Kwara', 'Ekiti', 'Benin'];
+	public tableData: any[] = [
+		{
+			Product: 'Petrol',
+			Reserve: '360 Tonnes'
+		},
+		{
+			Product: 'Diesel',
+			Reserve: '400 Tonnes'
+		}
+	];
 	constructor() { }
 
 	ngOnInit() {
 	}
-
 }

@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<!-- <div class="col-md-12">
 	<div class="card card-plain">
 		<div class="card-body">
 			<div class="table-responsive">
@@ -33,4 +33,28 @@
 			</div>
 		</div>
 	</div>
+</div> -->
+
+<div class="col-md-12">
+	<div class="card card-plain">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead class="">
+						<th *ngFor="let header of tableHearders">
+							{{ header }}
+						</th>
+					</thead>
+					<tbody>
+						<tr *ngFor="let body of tableData">
+							<td *ngFor="let header of tableHearders">
+								{{ body[header] }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
+

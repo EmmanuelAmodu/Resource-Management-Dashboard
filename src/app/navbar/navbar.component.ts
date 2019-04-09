@@ -1,9 +1,8 @@
-import { Component, OnInit, Renderer, ViewChild, ElementRef, Directive } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
-import { ROUTES } from '../dashboard/sidebar/sidebar.component';
 import { filter } from 'rxjs/operators';
 
 const misc: any = {
@@ -19,12 +18,14 @@ const misc: any = {
 })
 
 export class NavbarComponent implements OnInit {
-	private listTitles: any[];
 	location: Location;
 	private nativeElement: Node;
 	private toggleButton;
 	private sidebarVisible: boolean;
 	private _router: Subscription;
+
+	public showSideBar = false;
+	public showDepotBtn = true;
 
 	@ViewChild('app-navbar') button;
 
@@ -41,7 +42,6 @@ export class NavbarComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.listTitles = ROUTES.filter(listTitle => listTitle);
 
 		const navbar: HTMLElement = this.element.nativeElement;
 		const body = document.getElementsByTagName('body')[0];
@@ -49,6 +49,7 @@ export class NavbarComponent implements OnInit {
 		if (body.classList.contains('sidebar-mini')) {
 			misc.sidebar_mini_active = true;
 		}
+
 		this._router = this.router.events.pipe(
 			filter(event => event instanceof NavigationEnd)
 		).subscribe((event: NavigationEnd) => {
@@ -57,6 +58,14 @@ export class NavbarComponent implements OnInit {
 				$layer.remove();
 			}
 		});
+
+		if (this.getPath[1] === 'dashboard') {
+			this.showSideBar = true;
+		}
+
+		if (this.getPath[1] === 'depot') {
+			this.showDepotBtn = false;
+		}
 	}
 
 	minimizeSidebar() {
@@ -112,9 +121,11 @@ export class NavbarComponent implements OnInit {
 	}
 
 	get getPath() {
-		const b_no = this.location.path().split('/').length - 1;
-		return '../'.repeat(b_no);
-		// return this.location.prepareExternalUrl(this.location.path());
+		return this.location.path().split('/');
+	}
+
+	getLink() {
+		this.router.navigateByUrl('');
 	}
 
 	logout() {

@@ -6,7 +6,7 @@
 			<div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let depot of depots">
 				<div class="card card-testimonial" >
 					<div class="card-body ">
-						<app-tables></app-tables>
+						<app-tables [tableData]="tableData"></app-tables>
 					</div>
 					<div class="card-footer">
 						<h4 class="card-title">{{ depot }}</h4>

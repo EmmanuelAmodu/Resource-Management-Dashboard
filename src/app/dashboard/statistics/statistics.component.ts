@@ -46,9 +46,6 @@ export class StatisticsComponent implements OnInit {
 	public ngOnInit() {
 		this.chartColor = '#FFFFFF';
 
-		const cardStatsMiniLineColor = '#fff';
-		const	cardStatsMiniDotColor = '#fff';
-
 		this.canvas = document.getElementById('chartActivity');
 		this.ctx = this.canvas.getContext('2d');
 
