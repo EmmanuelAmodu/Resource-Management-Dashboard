@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { NavbarModule } from '../navbar/navbar.module';
 import { RequestComponent } from './request/request.component';
+import { DynamicFormsModule } from '../dynamic-form/dynamic-form.module';
 
 @NgModule({
 	declarations: [
@@ -20,6 +21,7 @@ import { RequestComponent } from './request/request.component';
 	imports: [
 		CommonModule,
 		NavbarModule,
+		DynamicFormsModule,
 		DashboardRoutingModule
 	]
 })

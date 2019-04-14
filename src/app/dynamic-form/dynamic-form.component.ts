@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { QuestionControlService } from './service/question-control/question-control.service';
 import { QuestionBase } from './Class/question-base';
 import { QuestionService } from './service/question/question.service';
+import { DataService } from '../Services/DataService/data.service';
 
 @Component({
 	selector: 'app-dynamic-form',
@@ -15,11 +16,13 @@ export class DynamicFormComponent implements OnInit {
 	questions: QuestionBase<any>[] = [];
 	form: FormGroup;
 	@Input() form_name: string;
-	payLoad = '';
+	@Input() form_action: Function;
+	private requestInfo = {data_model: '', data: {}};
 
 	constructor(
 		private qcs: QuestionControlService,
 		private q: QuestionService,
+		private ds: DataService,
 		private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -28,11 +31,15 @@ export class DynamicFormComponent implements OnInit {
 			this.q.getQuestions(this.form_name).subscribe(questions => {
 				this.questions = questions;
 				this.form = this.qcs.toFormGroup(this.questions);
+				this.requestInfo.data_model = this.q.data_model;
 			});
 		}
 	}
 
 	onSubmit() {
-		this.payLoad = JSON.stringify(this.form.value);
+		this.requestInfo.data = this.form.value;
+		this.ds.post('app/forms/save', this.requestInfo).subscribe(res => {
+			this.form_action(this.form.value, res);
+		});
 	}
 }

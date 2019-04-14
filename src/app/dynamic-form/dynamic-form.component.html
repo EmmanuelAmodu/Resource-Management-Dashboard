@@ -1,16 +1,15 @@
-<div>
-	<form (ngSubmit)="onSubmit()" [formGroup]="form">
-
-		<div *ngFor="let question of questions" class="form-row">
-			<app-question [question]="question" [form]="form"></app-question>
-		</div>
-
-		<div class="form-row">
-			<button type="submit" [disabled]="!form.valid">Save</button>
-		</div>
-	</form>
-
-	<div *ngIf="payLoad" class="form-row">
-		<strong>Saved the following values</strong><br>{{payLoad}}
+<div class="card ">
+	<div class="card-header ">
+		<h4 class="card-title">Stacked Form</h4>
+	</div>
+	<div class="card-body ">
+		<form (ngSubmit)="onSubmit()" [formGroup]="form">
+			<app-question [question]="question" [form]="form" *ngFor="let question of questions"></app-question>
+			<div class="card-footer">
+				<div class="form-row">
+					<button type="submit" [disabled]="!form.valid" class="btn btn-info btn-round">Save</button>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>

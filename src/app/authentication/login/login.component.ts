@@ -68,6 +68,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 		}).subscribe(res => {
 			if (res[0].token) {
 				this.ls.store('auth', JSON.stringify(res[0]));
+				this.authSevice.getUserDetails().subscribe(userDt =>
+					this.ls.store('user_details', JSON.stringify(userDt)
+				));
 				this.router.navigate(['']);
 			}
 		});

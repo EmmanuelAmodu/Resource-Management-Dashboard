@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class QuestionService {
 	private typeMap = {'Dropdown': DropdownQuestion, 'Textbox': TextboxQuestion};
+	public data_model:  string;
 
 	constructor(private dataService: DataService) {}
 
@@ -21,6 +22,7 @@ export class QuestionService {
 
 	private createFormOption(questionRaw: Observable<any>) {
 		return map((raw: any) => {
+			this.data_model = raw[0].data_model;
 			const form_fields = raw[0].form_fields;
 			const questions = form_fields.map(question => {
 				if (question.options_model) {
