@@ -623,12 +623,12 @@
 					<p class="card-category">Last Campaign Performance</p>
 				</div>
 				<div class="card-body ">
-					<canvas
-						id="chartDonut1"
-						class="ct-chart ct-perfect-fourth"
-						width="456"
-						height="300"
-					></canvas>
+					<app-chart
+						[elId]="'chartDonut1'"
+						[backgroundColor]="['#4acccd', '#f4f3ef']"
+						[chartData]="[60, 40]"
+						[chartType]="'donut'"
+					></app-chart>
 				</div>
 				<div class="card-footer ">
 					<div class="legend">
@@ -648,12 +648,12 @@
 					<p class="card-category">Out Of Total Number</p>
 				</div>
 				<div class="card-body ">
-					<canvas
-						id="chartDonut2"
-						class="ct-chart ct-perfect-fourth"
-						width="456"
-						height="300"
-					></canvas>
+					<app-chart
+						[elId]="'chartDonut2'"
+						[backgroundColor]="['#fcc468', '#f4f3ef']"
+						[chartData]="[34, 66]"
+						[chartType]="'donut'"
+					></app-chart>
 				</div>
 				<div class="card-footer ">
 					<div class="legend">
@@ -673,12 +673,12 @@
 					<p class="card-category">Total number</p>
 				</div>
 				<div class="card-body ">
-					<canvas
-						id="chartDonut3"
-						class="ct-chart ct-perfect-fourth"
-						width="456"
-						height="300"
-					></canvas>
+					<app-chart
+						[elId]="'chartDonut3'"
+						[backgroundColor]="['#f17e5d', '#f4f3ef']"
+						[chartData]="[80, 20]"
+						[chartType]="'donut'"
+					></app-chart>
 				</div>
 				<div class="card-footer ">
 					<div class="legend">
@@ -698,12 +698,12 @@
 					<p class="card-category">Our Users</p>
 				</div>
 				<div class="card-body ">
-					<canvas
-						id="chartDonut4"
-						class="ct-chart ct-perfect-fourth"
-						width="456"
-						height="300"
-					></canvas>
+					<app-chart
+						[elId]="'chartDonut4'"
+						[backgroundColor]="['#66615b', '#f4f3ef']"
+						[chartData]="[11, 89]"
+						[chartType]="'donut'"
+					></app-chart>
 				</div>
 				<div class="card-footer ">
 					<div class="legend">

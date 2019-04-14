@@ -9,6 +9,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { NavbarModule } from '../navbar/navbar.module';
 import { RequestComponent } from './request/request.component';
 import { DynamicFormsModule } from '../dynamic-form/dynamic-form.module';
+import { ChartModule } from '../chart/chart.module';
 
 @NgModule({
 	declarations: [
@@ -20,6 +21,7 @@ import { DynamicFormsModule } from '../dynamic-form/dynamic-form.module';
 	],
 	imports: [
 		CommonModule,
+		ChartModule,
 		NavbarModule,
 		DynamicFormsModule,
 		DashboardRoutingModule

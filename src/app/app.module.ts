@@ -12,6 +12,7 @@ import { DepotComponent } from './Components/depot/depot.component';
 import { StationComponent } from './Components/station/station.component';
 import { NavbarModule } from './navbar/navbar.module';
 import { TablesComponent } from './Components/tables/tables.component';
+import { ChartModule } from './chart/chart.module';
 
 @NgModule({
 	declarations: [
@@ -22,6 +23,7 @@ import { TablesComponent } from './Components/tables/tables.component';
 	],
 	imports: [
 		DynamicFormsModule,
+		ChartModule,
 		BrowserModule,
 		NavbarModule,
 		AppRoutingModule,
