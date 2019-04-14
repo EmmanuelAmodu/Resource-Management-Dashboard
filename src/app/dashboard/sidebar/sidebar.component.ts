@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { LocalStorageService } from 'src/app/Services/LocalStore/local-storage.service';
 import { IRouteInfo, IUserDetails } from '../dashboard.interface';

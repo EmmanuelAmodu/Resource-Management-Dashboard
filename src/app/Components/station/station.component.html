@@ -9,10 +9,15 @@
 						<h6 class="card-category">{{ station }}</h6>
 					</div>
 					<div class="card-body">
-						<div class="card-icon icon-primary ">
-							<i class="nc-icon nc-spaceship"></i>
-						</div>
-						<h3 class="card-title">69$</h3>
+						<app-chart
+							[elId]="'donut' + station"
+							[backgroundColor]="['#4acccd', '#f4f3ef']"
+							[chartData]="[60, 40]"
+							[chartType]="'donut'"
+							[width]="456"
+							[heigth]="300"
+							[classList]="['ct-chart', 'ct-perfect-fourth']"
+						></app-chart>
 						<ul>
 							<li>Working materials in EPS</li>
 							<li>6 months access to the library</li>
