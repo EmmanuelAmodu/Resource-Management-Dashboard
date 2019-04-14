@@ -1,5 +1,6 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 import Chart from 'chart.js';
+import { IDataset } from './chart.interface';
 
 declare const $: any;
 
@@ -8,16 +9,24 @@ declare const $: any;
 	templateUrl: './chart.component.html',
 	styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements AfterViewInit {
+export class ChartComponent implements AfterViewInit, OnInit {
 	public chartColor;
 	public canvas: any;
 	public ctx: any;
 	public chart: any;
 
+	@Input() classList: string[];
+	@Input() width: number; // 456
+	@Input() heigth: number; // 300
 	@Input() elId: string;
-	@Input() chartType: string;
+	@Input() chartType: 'bar' | 'donut' | 'line';
 	@Input() chartData: number[];
 	@Input() backgroundColor: string[];
+	@Input() labels: number[];
+	@Input() datasets: IDataset[];
+
+	public gradientStroke: any;
+	public gradientFill: any;
 
 	constructor() { }
 
@@ -39,8 +48,14 @@ export class ChartComponent implements AfterViewInit {
 				'rgb(' + r + ', ' + g + ', ' + b + ')';
 	}
 
+	ngOnInit() {
+	}
+
 	ngAfterViewInit() {
 		this.chartColor = '#FFFFFF';
+
+		this.canvas = document.getElementById(this.elId);
+		this.ctx = this.canvas.getContext('2d');
 
 		Chart.pluginService.register({
 			beforeDraw: function(chart) {
@@ -85,28 +100,16 @@ export class ChartComponent implements AfterViewInit {
 			}
 		});
 
-		switch (this.chartType) {
-			case 'donut':
-				this.donutChart();
-				break;
-
-			case 'bar':
-				this.barChart();
-				break;
-
-			case 'line':
-				this.lineChart();
-				break;
-
-			default:
-				break;
+		if (this.chartType === 'donut') {
+			this.donutChart();
+		} else if (this.chartType === 'bar') {
+			this.barChart();
+		} else if (this.chartType === 'line') {
+			this.lineChart();
 		}
 	}
 
 	private donutChart() {
-		this.canvas = document.getElementById(this.elId);
-		this.ctx = this.canvas.getContext('2d');
-
 		this.chart = new Chart(this.ctx, {
 			type: 'pie',
 			data: {
@@ -173,11 +176,141 @@ export class ChartComponent implements AfterViewInit {
 	}
 
 	private barChart() {
+		this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+		this.gradientStroke.addColorStop(0, '#80b6f4');
+		this.gradientStroke.addColorStop(1, this.chartColor);
 
+		this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+		this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+		this.gradientFill.addColorStop(1, 'rgba(249, 99, 59, 0.40)');
+
+		this.chart = new Chart(this.ctx, {
+			type: 'bar',
+			data: {
+				labels: this.labels,
+				datasets: this.datasets
+			},
+			options: {
+				tooltips: {
+					tooltipFillColor: 'rgba(0,0,0,0.5)',
+					tooltipFontFamily:
+						'\'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif',
+					tooltipFontSize: 14,
+					tooltipFontStyle: 'normal',
+					tooltipFontColor: '#fff',
+					tooltipTitleFontFamily:
+						'\'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif',
+					tooltipTitleFontSize: 14,
+					tooltipTitleFontStyle: 'bold',
+					tooltipTitleFontColor: '#fff',
+					tooltipYPadding: 6,
+					tooltipXPadding: 6,
+					tooltipCaretSize: 8,
+					tooltipCornerRadius: 6,
+					tooltipXOffset: 10
+				},
+
+				legend: {
+					display: false
+				},
+				scales: {
+					yAxes: [
+						{
+							ticks: {
+								fontColor: '#9f9f9f',
+								fontStyle: 'bold',
+								beginAtZero: true,
+								maxTicksLimit: 5,
+								padding: 20
+							},
+							gridLines: {
+								zeroLineColor: 'transparent',
+								display: true,
+								drawBorder: false,
+								color: '#9f9f9f'
+							}
+						}
+					],
+					xAxes: [
+						{
+							barPercentage: 0.4,
+							gridLines: {
+								zeroLineColor: 'white',
+								display: false,
+
+								drawBorder: false,
+								color: 'transparent'
+							},
+							ticks: {
+								padding: 20,
+								fontColor: '#9f9f9f',
+								fontStyle: 'bold'
+							}
+						}
+					]
+				}
+			}
+		});
 	}
 
 	private lineChart() {
+		this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+		this.gradientStroke.addColorStop(0, '#2CA8FF');
+		this.gradientStroke.addColorStop(1, this.chartColor);
 
+		this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+		this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+		this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.4));
+
+		this.chart = new Chart(this.ctx, {
+			type: 'line',
+			data: {
+				labels: this.labels,
+				datasets: this.datasets
+			},
+			options: {
+				legend: {
+					display: false
+				},
+
+				tooltips: {
+					enabled: false
+				},
+
+				scales: {
+					yAxes: [
+						{
+							ticks: {
+								fontColor: '#9f9f9f',
+								beginAtZero: false,
+								maxTicksLimit: 5
+								// padding: 20
+							},
+							gridLines: {
+								drawBorder: false,
+								zeroLineColor: 'transparent',
+								color: 'rgba(255,255,255,0.05)'
+							}
+						}
+					],
+
+					xAxes: [
+						{
+							barPercentage: 1.6,
+							gridLines: {
+								drawBorder: false,
+								color: 'rgba(255,255,255,0.1)',
+								zeroLineColor: 'transparent',
+								display: false
+							},
+							ticks: {
+								padding: 20,
+								fontColor: '#9f9f9f'
+							}
+						}
+					]
+				}
+			}
+		});
 	}
 }
-

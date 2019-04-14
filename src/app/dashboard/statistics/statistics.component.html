@@ -128,7 +128,14 @@
 					<h6 class="big-title">
 						total earnings in last ten quarters
 					</h6>
-					<canvas id="activeUsers" width="826" height="380"></canvas>
+					<app-chart
+						[elId]="'activeUsers'"
+						[width]="826"
+						[heigth]="380"
+						[labels]="[ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct' ]"
+						[datasets]="datasets_line_1"
+						[chartType]="'line'"
+					></app-chart>
 				</div>
 				<div class="card-footer">
 					<hr />
@@ -171,11 +178,14 @@
 					<h6 class="big-title">
 						total subscriptions in last 7 days
 					</h6>
-					<canvas
-						id="emailsCampaignChart"
-						width="826"
-						height="380"
-					></canvas>
+					<app-chart
+						[elId]="'emailsCampaignChart'"
+						[width]="826"
+						[heigth]="380"
+						[labels]="[ '12pm', '3pm', '6pm', '9pm', '12am', '3am', '6am', '9am' ]"
+						[datasets]="datasets_line_2"
+						[chartType]="'line'"
+					></app-chart>
 				</div>
 				<div class="card-footer">
 					<hr />
@@ -216,11 +226,14 @@
 				</div>
 				<div class="card-body">
 					<h6 class="big-title">total downloads in last 6 years</h6>
-					<canvas
-						id="activeCountries"
-						width="826"
-						height="380"
-					></canvas>
+					<app-chart
+						[elId]="'activeCountries'"
+						[width]="826"
+						[heigth]="380"
+						[labels]="[ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct' ]"
+						[datasets]="datasets_line_3"
+						[chartType]="'line'"
+					></app-chart>
 				</div>
 				<div class="card-footer">
 					<hr />
@@ -600,7 +613,13 @@
 					<p class="card-category">All products including Taxes</p>
 				</div>
 				<div class="card-body ">
-					<canvas id="chartActivity"></canvas>
+					<app-chart
+						[elId]="'chartActivity'"
+						[chartType]="'bar'"
+						[heigth]="267"
+						[labels]="[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]"
+						[datasets]="datasets_bar"
+					></app-chart>
 				</div>
 				<div class="card-footer ">
 					<div class="legend">
@@ -628,6 +647,9 @@
 						[backgroundColor]="['#4acccd', '#f4f3ef']"
 						[chartData]="[60, 40]"
 						[chartType]="'donut'"
+						[width]="456"
+						[heigth]="300"
+						[classList]="['ct-chart', 'ct-perfect-fourth']"
 					></app-chart>
 				</div>
 				<div class="card-footer ">
@@ -653,6 +675,9 @@
 						[backgroundColor]="['#fcc468', '#f4f3ef']"
 						[chartData]="[34, 66]"
 						[chartType]="'donut'"
+						[width]="456"
+						[heigth]="300"
+						[classList]="['ct-chart', 'ct-perfect-fourth']"
 					></app-chart>
 				</div>
 				<div class="card-footer ">
@@ -678,6 +703,9 @@
 						[backgroundColor]="['#f17e5d', '#f4f3ef']"
 						[chartData]="[80, 20]"
 						[chartType]="'donut'"
+						[width]="456"
+						[heigth]="300"
+						[classList]="['ct-chart', 'ct-perfect-fourth']"
 					></app-chart>
 				</div>
 				<div class="card-footer ">
@@ -703,6 +731,9 @@
 						[backgroundColor]="['#66615b', '#f4f3ef']"
 						[chartData]="[11, 89]"
 						[chartType]="'donut'"
+						[width]="456"
+						[heigth]="300"
+						[classList]="['ct-chart', 'ct-perfect-fourth']"
 					></app-chart>
 				</div>
 				<div class="card-footer ">

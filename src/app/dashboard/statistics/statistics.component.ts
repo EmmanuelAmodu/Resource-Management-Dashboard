@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
+import { IDataset } from 'src/app/chart/chart.interface';
 
 declare const $: any;
 
@@ -8,20 +9,11 @@ declare const $: any;
 	templateUrl: './statistics.component.html'
 })
 export class StatisticsComponent implements OnInit {
-	public gradientStroke;
-	public chartColor;
-	public canvas: any;
-	public ctx;
-	public gradientFill;
-	// constructor(private navbarTitleService: NavbarTitleService) { }
-	public gradientChartOptionsConfiguration: any;
-	public gradientChartOptionsConfigurationWithNumbersAndGrid: any;
-
-	public activeUsersChartType;
-	public activeUsersChartData: Array<any>;
-	public activeUsersChartOptions: any;
-	public activeUsersChartLabels: Array<any>;
-	public activeUsersChartColors: Array<any>;
+	public datasets_bar: IDataset[];
+	datasets_line_3: any[];
+	datasets_line_2: IDataset[];
+	datasets_line_1: IDataset[];
+	gradientFill: string;
 
 	public chartClicked(e: any): void {
 		console.log(e);
@@ -44,368 +36,64 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.chartColor = '#FFFFFF';
-
-		this.canvas = document.getElementById('chartActivity');
-		this.ctx = this.canvas.getContext('2d');
-
-		this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-		this.gradientStroke.addColorStop(0, '#80b6f4');
-		this.gradientStroke.addColorStop(1, this.chartColor);
-
-		this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-		this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-		this.gradientFill.addColorStop(1, 'rgba(249, 99, 59, 0.40)');
-
-		let myChart = new Chart(this.ctx, {
-			type: 'bar',
-			data: {
-				labels: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ],
-				datasets: [
-					{
-						label: 'Data',
-						borderColor: '#fcc468',
-						fill: true,
-						backgroundColor: '#fcc468',
-						hoverBorderColor: '#fcc468',
-						borderWidth: 8,
-						data: [100, 120, 80, 100, 90, 130, 110, 100, 80, 110, 130, 140, 130, 120, 130, 80, 100, 90, 120, 130]
-					},
-					{
-						label: 'Data',
-						borderColor: '#4cbdd7',
-						fill: true,
-						backgroundColor: '#4cbdd7',
-						hoverBorderColor: '#4cbdd7',
-						borderWidth: 8,
-						data: [ 80, 140, 50, 120, 50, 150, 60, 130, 50, 130, 150, 100, 110, 80, 140, 50, 140, 50, 110, 150 ]
-					}
-				]
+		this.datasets_bar = [
+			{
+				label: 'Data',
+				borderColor: '#fcc468',
+				fill: true,
+				backgroundColor: '#fcc468',
+				hoverBorderColor: '#fcc468',
+				borderWidth: 8,
+				data: [100, 120, 80, 100, 90, 130, 110, 100, 80, 110, 130, 140, 130, 120, 130, 80, 100, 90, 120, 130]
 			},
-			options: {
-				tooltips: {
-					tooltipFillColor: 'rgba(0,0,0,0.5)',
-					tooltipFontFamily:
-						'\'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif',
-					tooltipFontSize: 14,
-					tooltipFontStyle: 'normal',
-					tooltipFontColor: '#fff',
-					tooltipTitleFontFamily:
-						'\'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif',
-					tooltipTitleFontSize: 14,
-					tooltipTitleFontStyle: 'bold',
-					tooltipTitleFontColor: '#fff',
-					tooltipYPadding: 6,
-					tooltipXPadding: 6,
-					tooltipCaretSize: 8,
-					tooltipCornerRadius: 6,
-					tooltipXOffset: 10
-				},
-
-				legend: {
-					display: false
-				},
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								fontColor: '#9f9f9f',
-								fontStyle: 'bold',
-								beginAtZero: true,
-								maxTicksLimit: 5,
-								padding: 20
-							},
-							gridLines: {
-								zeroLineColor: 'transparent',
-								display: true,
-								drawBorder: false,
-								color: '#9f9f9f'
-							}
-						}
-					],
-					xAxes: [
-						{
-							barPercentage: 0.4,
-							gridLines: {
-								zeroLineColor: 'white',
-								display: false,
-
-								drawBorder: false,
-								color: 'transparent'
-							},
-							ticks: {
-								padding: 20,
-								fontColor: '#9f9f9f',
-								fontStyle: 'bold'
-							}
-						}
-					]
-				}
+			{
+				label: 'Data',
+				borderColor: '#4cbdd7',
+				fill: true,
+				backgroundColor: '#4cbdd7',
+				hoverBorderColor: '#4cbdd7',
+				borderWidth: 8,
+				data: [ 80, 140, 50, 120, 50, 150, 60, 130, 50, 130, 150, 100, 110, 80, 140, 50, 140, 50, 110, 150 ]
 			}
-		});
+		];
 
-		Chart.pluginService.register({
-			beforeDraw: function(chart) {
-				if (chart.config.options.elements.center) {
-					// Get ctx from string
-					const ctx = chart.chart.ctx;
-
-					// Get options from the center object in options
-					const centerConfig = chart.config.options.elements.center;
-					const fontStyle = centerConfig.fontStyle || 'Arial';
-					const txt = centerConfig.text;
-					const color = centerConfig.color || '#000';
-					const sidePadding = centerConfig.sidePadding || 20;
-					const sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2);
-
-					// Start with a base font of 30px
-					ctx.font = '30px ' + fontStyle;
-
-					// Get the width of the string and also the width of the element minus 10 to give it 5px side padding
-					const stringWidth = ctx.measureText(txt).width;
-					const elementWidth = chart.innerRadius * 2 - sidePaddingCalculated;
-
-					// Find out how much the font can grow in width.
-					const widthRatio = elementWidth / stringWidth;
-					const newFontSize = Math.floor(30 * widthRatio);
-					const elementHeight = chart.innerRadius * 2;
-
-					// Pick a new font size so it will not be larger than the height of label.
-					const fontSizeToUse = Math.min(newFontSize, elementHeight);
-
-					// Set font settings to draw it correctly.
-					ctx.textAlign = 'center';
-					ctx.textBaseline = 'middle';
-					const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
-					const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-					ctx.font = fontSizeToUse + 'px ' + fontStyle;
-					ctx.fillStyle = color;
-
-					// Draw text in center
-					ctx.fillText(txt, centerX, centerY);
-				}
+		this.datasets_line_1 = [
+			{
+				label: 'Active Users',
+				borderColor: '#6bd098',
+				pointRadius: 0,
+				pointHoverRadius: 0,
+				fill: false,
+				borderWidth: 3,
+				data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610]
 			}
-		});
+		];
 
-		this.canvas = document.getElementById('activeUsers');
-		this.ctx = this.canvas.getContext('2d');
-
-		this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-		this.gradientStroke.addColorStop(0, '#80b6f4');
-		this.gradientStroke.addColorStop(1, this.chartColor);
-
-		this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-		this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-		this.gradientFill.addColorStop(1, 'rgba(249, 99, 59, 0.40)');
-
-		myChart = new Chart(this.ctx, {
-			type: 'line',
-			data: {
-				labels: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct' ],
-				datasets: [
-					{
-						label: 'Active Users',
-						borderColor: '#6bd098',
-						pointRadius: 0,
-						pointHoverRadius: 0,
-						fill: false,
-						borderWidth: 3,
-						data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610]
-					}
-				]
-			},
-			options: {
-				legend: {
-					display: false
-				},
-
-				tooltips: {
-					enabled: false
-				},
-
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								fontColor: '#9f9f9f',
-								beginAtZero: false,
-								maxTicksLimit: 5
-								// padding: 20
-							},
-							gridLines: {
-								drawBorder: false,
-								zeroLineColor: 'transparent',
-								color: 'rgba(255,255,255,0.05)'
-							}
-						}
-					],
-
-					xAxes: [
-						{
-							barPercentage: 1.6,
-							gridLines: {
-								drawBorder: false,
-								color: 'rgba(255,255,255,0.1)',
-								zeroLineColor: 'transparent',
-								display: false
-							},
-							ticks: {
-								padding: 20,
-								fontColor: '#9f9f9f'
-							}
-						}
-					]
-				}
+		this.datasets_line_2 = [
+			{
+				label: 'Email Stats',
+				borderColor: '#ef8156',
+				pointHoverRadius: 0,
+				pointRadius: 0,
+				fill: false,
+				backgroundColor: this.gradientFill,
+				borderWidth: 3,
+				data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
 			}
-		});
+		];
 
-		this.canvas = document.getElementById('emailsCampaignChart');
-		this.ctx = this.canvas.getContext('2d');
-
-		this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-		this.gradientStroke.addColorStop(0, '#18ce0f');
-		this.gradientStroke.addColorStop(1, this.chartColor);
-
-		this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-		this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-		this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
-
-		myChart = new Chart(this.ctx, {
-			type: 'line',
-			data: {
-				labels: [ '12pm', '3pm', '6pm', '9pm', '12am', '3am', '6am', '9am' ],
-				datasets: [
-					{
-						label: 'Email Stats',
-						borderColor: '#ef8156',
-						pointHoverRadius: 0,
-						pointRadius: 0,
-						fill: false,
-						backgroundColor: this.gradientFill,
-						borderWidth: 3,
-						data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
-					}
-				]
-			},
-			options: {
-				legend: {
-					display: false
-				},
-
-				tooltips: {
-					enabled: false
-				},
-
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								fontColor: '#9f9f9f',
-								beginAtZero: false,
-								maxTicksLimit: 5
-								// padding: 20
-							},
-							gridLines: {
-								drawBorder: false,
-								zeroLineColor: 'transparent',
-								color: 'rgba(255,255,255,0.05)'
-							}
-						}
-					],
-
-					xAxes: [
-						{
-							barPercentage: 1.6,
-							gridLines: {
-								drawBorder: false,
-								color: 'rgba(255,255,255,0.1)',
-								zeroLineColor: 'transparent',
-								display: false
-							},
-							ticks: {
-								padding: 20,
-								fontColor: '#9f9f9f'
-							}
-						}
-					]
-				}
+		this.datasets_line_3 = [
+			{
+				label: 'Active Countries',
+				backgroundColor: this.gradientFill,
+				borderColor: '#fbc658',
+				pointHoverRadius: 0,
+				pointRadius: 0,
+				fill: false,
+				borderWidth: 3,
+				data: [80, 78, 86, 96, 83, 85, 76, 75, 88, 90]
 			}
-		});
-
-		this.canvas = document.getElementById('activeCountries');
-		this.ctx = this.canvas.getContext('2d');
-
-		this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-		this.gradientStroke.addColorStop(0, '#2CA8FF');
-		this.gradientStroke.addColorStop(1, this.chartColor);
-
-		this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-		this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-		this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.4));
-
-		const a = {
-			type: 'line',
-			data: {
-				labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October' ],
-				datasets: [
-					{
-						label: 'Active Countries',
-						backgroundColor: this.gradientFill,
-						borderColor: '#fbc658',
-						pointHoverRadius: 0,
-						pointRadius: 0,
-						fill: false,
-						borderWidth: 3,
-						data: [80, 78, 86, 96, 83, 85, 76, 75, 88, 90]
-					}
-				]
-			},
-			options: {
-				legend: {
-					display: false
-				},
-
-				tooltips: {
-					enabled: false
-				},
-
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								fontColor: '#9f9f9f',
-								beginAtZero: false,
-								maxTicksLimit: 5
-								// padding: 20
-							},
-							gridLines: {
-								drawBorder: false,
-								zeroLineColor: 'transparent',
-								color: 'rgba(255,255,255,0.05)'
-							}
-						}
-					],
-
-					xAxes: [
-						{
-							barPercentage: 1.6,
-							gridLines: {
-								drawBorder: false,
-								color: 'rgba(255,255,255,0.1)',
-								zeroLineColor: 'transparent',
-								display: false
-							},
-							ticks: {
-								padding: 20,
-								fontColor: '#9f9f9f'
-							}
-						}
-					]
-				}
-			}
-		};
-
-		const viewsChart = new Chart(this.ctx, a);
+		];
 
 		const mapData = { AU: 760, BR: 550, CA: 120, DE: 1300, FR: 540, GB: 690, GE: 200, IN: 200, RO: 600, RU: 300, US: 2920 };
 
