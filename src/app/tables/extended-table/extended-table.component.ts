@@ -19,6 +19,7 @@ export class ExtendedTableComponent implements OnInit, AfterViewInit {
 
 	@Input() headers: any;
 	@Input() body: any[];
+	@Input() elemID: string;
 
 	ngOnInit() {
 		this.headerKeys = Object.keys(this.headers);
@@ -26,7 +27,7 @@ export class ExtendedTableComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		$('#datatable').DataTable({
+		$('#' + this.elemID).DataTable({
 			'pagingType': 'full_numbers',
 			'lengthMenu': [
 				[10, 25, 50, -1],
@@ -38,7 +39,7 @@ export class ExtendedTableComponent implements OnInit, AfterViewInit {
 				searchPlaceholder: 'Search records',
 			}
 		});
-		const table = $('#datatable').DataTable();
+		const table = $('#' + this.elemID).DataTable();
 
 		// Edit record
 		table.on('click', '.edit', function() {
