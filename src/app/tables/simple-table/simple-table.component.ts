@@ -8,12 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SimpleTableComponent implements OnInit {
 
 	@Input() tableData: any[];
-	@Input() tableHearders: string[];
+	tableHearders: string[];
 
 	constructor() { }
 
 	ngOnInit() {
+		this.tableHearders = Object.keys(this.tableData[0]);
 	}
-
 }
 

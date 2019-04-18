@@ -11,24 +11,24 @@ import { DynamicFormsModule } from './dynamic-form/dynamic-form.module';
 import { DepotComponent } from './Components/depot/depot.component';
 import { StationComponent } from './Components/station/station.component';
 import { NavbarModule } from './navbar/navbar.module';
-import { TablesComponent } from './Components/tables/tables.component';
 import { ChartModule } from './chart/chart.module';
+import { TablesModule } from './tables/tables.module';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		DepotComponent,
-		StationComponent,
-		TablesComponent
+		StationComponent
 	],
 	imports: [
-		DynamicFormsModule,
-		ChartModule,
 		BrowserModule,
 		NavbarModule,
 		AppRoutingModule,
+		HttpClientModule,
 		AuthenticationModule,
-		HttpClientModule
+		DynamicFormsModule,
+		ChartModule,
+		TablesModule,
 	],
 	providers: [DataService, LocalStorageService],
 	bootstrap: [AppComponent]
