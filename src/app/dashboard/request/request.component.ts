@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/Services/DataService/data.service';
 
 @Component({
 	selector: 'app-request',
@@ -8,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class RequestComponent implements OnInit {
 	public form_name = 'SupplyRequestForm';
 
-	constructor() { }
+	constructor(
+		private ds: DataService
+	) { }
 
 	ngOnInit() {
 	}
 
-	public submitFormCallBack(data: any, res: any) {
-		console.log(data, res);
+	public submitFormAction(formData: {data_model: string, data: any}) {
+		this.ds.post('app/request', formData)
+			.subscribe(res => console.log(res));
 	}
 }

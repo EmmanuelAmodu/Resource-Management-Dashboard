@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from '../auth.guard';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { RequestComponent } from './request/request.component';
+import { SupplyRequestComponent } from './supply-request/supply-request.component';
 
 const routes: Routes = [
 	{
@@ -11,6 +12,10 @@ const routes: Routes = [
 		canActivate: [AuthGuard],
 		component: DashboardComponent,
 		children: [
+			{
+				path: 'approval/supply_request',
+				component: SupplyRequestComponent,
+			},
 			{
 				path: ':entity/:name',
 				component: StatisticsComponent,

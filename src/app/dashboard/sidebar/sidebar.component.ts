@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { LocalStorageService } from 'src/app/Services/LocalStore/local-storage.service';
 import { IRouteInfo, IUserDetails } from '../dashboard.interface';
@@ -9,7 +9,7 @@ import { DataService } from 'src/app/Services/DataService/data.service';
 	selector: 'app-sidebar',
 	templateUrl: 'sidebar.component.html',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 	public menuItems: any[];
 	private location: Location;
 	public userInfo: IUserDetails;
@@ -37,9 +37,22 @@ export class SidebarComponent implements OnInit {
 				this.userInfo.roles.forEach(rl => {
 					if (menuItem.permitTo.includes(rl)) { remenu = true; }
 				});
-				if (menuItem.title === 'Dashboard') { menuItem.path = this.location.path(); }
+				if (menuItem.title === 'Dashboard') {
+					const home_path = this.ls.fetch('home_path');
+					menuItem.path = home_path ? home_path : this.getPath();
+				}
 				if (remenu) { return menuItem; }
 			});
 		});
+	}
+
+	getPath() {
+		const home_path = this.location.path();
+		this.ls.store('home_path', home_path);
+		return home_path;
+	}
+
+	ngOnDestroy() {
+		this.ls.remove('home_path');
 	}
 }
