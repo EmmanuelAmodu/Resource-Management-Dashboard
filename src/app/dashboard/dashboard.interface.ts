@@ -1,4 +1,5 @@
 export interface IRouteInfo {
+	_id: string;
 	path: string;
 	title: string;
 	type: string;

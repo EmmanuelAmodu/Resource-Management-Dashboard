@@ -35,6 +35,7 @@ export class DataService {
 	}
 
 	private getTokenLocal() {
-		this.auth = JSON.parse(this.ls.fetch('auth'));
+		const auth = JSON.parse(this.ls.fetch('auth'));
+		this.auth = auth == null ? {username:"", token:""} : auth;
 	}
 }

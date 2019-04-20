@@ -19,12 +19,6 @@
 					</th>
 				</tr>
 			</thead>
-			<tfoot>
-				<tr>
-					<th *ngFor="let header of headerValue">{{ header }}</th>
-					<th>Actions</th>
-				</tr>
-			</tfoot>
 			<tbody>
 				<tr *ngFor="let row of body">
 					<td *ngFor="let key of headerKeys">{{ row[key] }}</td>

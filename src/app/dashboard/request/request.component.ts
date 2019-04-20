@@ -10,10 +10,8 @@ export class RequestComponent implements OnInit {
 	public form_name = 'SupplyRequestForm';
 	public gridHeader = {
 		'_id': 'ID',
-		'product_type': 'Product Type',
-		'station': 'Station',
+		'product_type': 'Product',
 		'quantity': 'Quantity',
-		'emailAddress': 'Email Address',
 		'status': 'Status'
 	};
 
@@ -29,9 +27,7 @@ export class RequestComponent implements OnInit {
 			{
 				'_id' : 'REQ-20190417-51839',
 				'product_type' : 'great',
-				'station' : 'Ketu Station',
 				'quantity' : '12',
-				'emailAddress' : 'emmanuel.amodu@outlook.com',
 				'status' : 'initiated'
 			}
 		];
