@@ -9,10 +9,10 @@ import { DataService } from 'src/app/Services/DataService/data.service';
 export class RequestComponent implements OnInit {
 	public form_name = 'SupplyRequestForm';
 	public gridHeader = {
-		'_id': 'ID',
+		'orderid': 'ID',
 		'product_type': 'Product',
-		'quantity': 'Quantity',
-		'status': 'Status'
+		'product_quantity': 'Quantity',
+		'request_status': 'Status'
 	};
 
 	public pendingRequest: any[];
@@ -22,19 +22,16 @@ export class RequestComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		// TODO fetch from remote
-		this.pendingRequest = [
-			{
-				'_id' : 'REQ-20190417-51839',
-				'product_type' : 'great',
-				'quantity' : '12',
-				'status' : 'initiated'
-			}
-		];
+		this.getPendingRequest();
 	}
 
-	public submitFormAction(formData: {data_model: string, data: any}) {
-		this.ds.post('app/request', formData)
-			.subscribe(res => console.log(res));
+	getPendingRequest() {
+		this.ds.get('app/request', { station_name: "Ketu Station" })
+			.subscribe(res => this.pendingRequest = res);
 	}
+
+	public submitFormAction = function(formData: { data_model: string, data: any }) {
+		this.ds.post('app/request', formData)
+			.subscribe(res => this.getPendingRequest());
+	}.bind(this)
 }
