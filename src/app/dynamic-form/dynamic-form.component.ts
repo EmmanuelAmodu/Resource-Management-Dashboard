@@ -21,7 +21,6 @@ export class DynamicFormComponent implements OnInit {
 
 	constructor(
 		private qcs: QuestionControlService,
-		private ds: DataService,
 		private q: QuestionService) { }
 
 	ngOnInit() {
