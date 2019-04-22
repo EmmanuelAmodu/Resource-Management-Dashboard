@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/Services/DataService/data.service';
 
 @Component({
 	selector: 'app-supply-request',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupplyRequestComponent implements OnInit {
 
-	constructor() { }
+	public gridHeader = {
+		'orderid': 'ID',
+		'product_type': 'Product',
+		'product_quantity': 'Quantity',
+		'request_status': 'Status'
+	};
+
+	public pendingRequest: any[];
+
+	constructor(
+		private ds: DataService
+	) { }
 
 	ngOnInit() {
+		this.ds.get('app/request', { station_name: "Ketu Station" })
+			.subscribe(res => this.pendingRequest = res);
 	}
 
 }

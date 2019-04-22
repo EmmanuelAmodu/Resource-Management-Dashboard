@@ -1,3 +1,11 @@
-<p>
-  supply-request works!
-</p>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <app-extended-table 
+        [headers]="gridHeader" 
+        [body]="pendingRequest" 
+        [elemID]="'pending_request'"
+      ></app-extended-table>
+    </div>
+  </div>
+</div>
