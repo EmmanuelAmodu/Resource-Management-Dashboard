@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-	selector: 'app-tables',
-	templateUrl: './tables.component.html',
-	styleUrls: ['./tables.component.css']
+	selector: 'app-simple-table',
+	templateUrl: './simple-table.component.html',
+	styleUrls: ['./simple-table.component.css']
 })
-export class TablesComponent implements OnInit {
+export class SimpleTableComponent implements OnInit {
+
 	@Input() tableData: any[];
 	tableHearders: string[];
 
@@ -15,3 +16,4 @@ export class TablesComponent implements OnInit {
 		this.tableHearders = Object.keys(this.tableData[0]);
 	}
 }
+

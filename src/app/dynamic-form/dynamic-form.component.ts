@@ -14,32 +14,28 @@ import { DataService } from '../Services/DataService/data.service';
 export class DynamicFormComponent implements OnInit {
 
 	questions: QuestionBase<any>[] = [];
-	form: FormGroup;
+	form = this.qcs.toFormGroup([]);
 	@Input() form_name: string;
 	@Input() form_action: Function;
-	private requestInfo = {data_model: '', data: {}};
+	private formData = {data_model: '', data: {}};
 
 	constructor(
 		private qcs: QuestionControlService,
-		private q: QuestionService,
 		private ds: DataService,
-		private route: ActivatedRoute) { }
+		private q: QuestionService) { }
 
 	ngOnInit() {
-		this.form = this.qcs.toFormGroup([]);
 		if (this.form_name !== undefined) {
 			this.q.getQuestions(this.form_name).subscribe(questions => {
 				this.questions = questions;
 				this.form = this.qcs.toFormGroup(this.questions);
-				this.requestInfo.data_model = this.q.data_model;
+				this.formData.data_model = this.q.data_model;
 			});
 		}
 	}
 
 	onSubmit() {
-		this.requestInfo.data = this.form.value;
-		this.ds.post('app/forms/save', this.requestInfo).subscribe(res => {
-			this.form_action(this.form.value, res);
-		});
+		this.formData.data = this.form.value;
+		this.form_action(this.formData);
 	}
 }

@@ -57,19 +57,17 @@
 			<!--If it have a submenu-->
 			<a
 				data-toggle="collapse"
-				href="#{{ menuitem.title }}"
-				*ngIf="menuitem.type === 'sub'"
-			>
+				href="#{{ menuitem._id }}"
+				*ngIf="menuitem.type === 'sub'">
 				<i class="{{ menuitem.icontype }}"></i>
 				<p>{{ menuitem.title }}<b class="caret"></b></p>
 			</a>
 
 			<!--Display the submenu items-->
 			<div
-				id="{{ menuitem.title }}"
+				id="{{ menuitem._id }}"
 				class="collapse"
-				*ngIf="menuitem.type === 'sub'"
-			>
+				*ngIf="menuitem.type === 'sub'">
 				<ul class="nav">
 					<li
 						routerLinkActive="active"

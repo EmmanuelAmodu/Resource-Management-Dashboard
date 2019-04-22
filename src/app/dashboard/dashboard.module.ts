@@ -10,6 +10,8 @@ import { NavbarModule } from '../navbar/navbar.module';
 import { RequestComponent } from './request/request.component';
 import { DynamicFormsModule } from '../dynamic-form/dynamic-form.module';
 import { ChartModule } from '../chart/chart.module';
+import { SupplyRequestComponent } from './supply-request/supply-request.component';
+import { TablesModule } from '../tables/tables.module';
 
 @NgModule({
 	declarations: [
@@ -17,10 +19,12 @@ import { ChartModule } from '../chart/chart.module';
 		SidebarComponent,
 		FooterComponent,
 		StatisticsComponent,
-		RequestComponent
+		RequestComponent,
+		SupplyRequestComponent
 	],
 	imports: [
 		CommonModule,
+		TablesModule,
 		ChartModule,
 		NavbarModule,
 		DynamicFormsModule,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase } from '../../Class/question-base';
+import { QuestionBase, IQuestionRaw, IOptions } from '../../Class/question-base';
 import { DropdownQuestion } from '../../Class/question-dropdown';
 import { TextboxQuestion } from '../../Class/question-textbox';
 import { DataService } from 'src/app/Services/DataService/data.service';
@@ -22,24 +22,28 @@ export class QuestionService {
 
 	private createFormOption(questionRaw: Observable<any>) {
 		return map((raw: any) => {
-			this.data_model = raw[0].data_model;
-			const form_fields = raw[0].form_fields;
-			const questions = form_fields.map(question => {
-				if (question.options_model) {
-					question.options = this.getOptions(question.options_model);
-					delete question.options_model;
-				}
-				const optionType = this.typeMap[question['ftype']];
-				delete question.options_model;
-				question = new optionType(question);
-				return question;
-			});
-			return questions.sort((a, b) => a.order - b.order);
+			let result = [];
+			if (raw.length !== 0){
+				this.data_model = raw[0].data_model;
+				const form_fields = raw[0].form_fields;
+				const questions = form_fields.map((question: IQuestionRaw) => {
+					if (question.options_model) {
+						question.options = this.getOptions(question.options_model);
+						delete question.options_model;
+					}
+					const optionType = this.typeMap[question['ftype']];
+					delete question.ftype;
+					question = new optionType(question);
+					return question;
+				});
+				result = questions.sort((a, b) => a.order - b.order);
+			}
+			return result;
 		})(questionRaw);
 	}
 
 	// TODO: get value from
-	private getOptions(model) {
+	private getOptions(model: string) {
 		return [
 			{ key: 'solid', value: 'Solid' },
 			{ key: 'great', value: 'Great' },

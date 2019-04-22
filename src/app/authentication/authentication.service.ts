@@ -32,6 +32,7 @@ export class AuthenticationService {
 	}
 
 	public get auth() {
-		return JSON.parse(this.ls.fetch('auth'));
+		const auth = JSON.parse(this.ls.fetch('auth'));
+		return auth == null ? {} : auth;
 	}
 }
